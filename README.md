@@ -1,44 +1,90 @@
-# Dialog Kebangsaan Simple Event App
+# Dialog Kebangsaan Event App
 
-MVP Nuxt 3 + Tailwind CSS + PostgreSQL lokal untuk registrasi peserta, self check-in, survey 14 pertanyaan, sertifikat HTML printable, Action Plan berbasis link, dashboard admin, dan export CSV.
+Nuxt 3 + Tailwind CSS + PostgreSQL MVP for participant registration, self check-in, dynamic survey, printable HTML certificate, link-based Action Plan, and admin dashboard.
 
-## Setup Lokal
+## Tech Stack
 
-1. Install dependency: `npm install`
-2. Copy `.env.example` menjadi `.env`
-3. Isi `DATABASE_URL=postgres://postgres:postgres@localhost:5432/simple_event` dan `NUXT_PUBLIC_ADMIN_PASSWORD`
-4. Buat database lokal: `createdb -U postgres simple_event`
-5. Jalankan schema: `psql -U postgres -d simple_event -f sql/schema.sql`
-6. (Opsional) Isi dummy data: `psql -U postgres -d simple_event -f sql/seed.sql`
-6. Jalankan app: `npm run dev`
+- **Frontend:** Nuxt 3, Tailwind CSS, Vue 3 (Composition API)
+- **Backend:** Nuxt server routes (API), `pg` driver
+- **Database:** PostgreSQL (local or cloud)
+- **Deploy:** Vercel (nitro preset `vercel`)
 
-## Route Publik
+## Local Setup
 
-- `/`
-- `/register`
-- `/success/[participant_code]`
-- `/checkin`
-- `/survey`
-- `/certificate`
-- `/action-plan`
+1. Install dependencies: `npm install`
+2. Copy `.env.example` to `.env`
+3. Fill in `DATABASE_URL` and `NUXT_PUBLIC_ADMIN_PASSWORD`
+4. Create database: `createdb -U postgres simple_event`
+5. Run schema: `psql -U postgres -d simple_event -f sql/schema.sql`
+6. (Optional) Seed dummy data: `psql -U postgres -d simple_event -f sql/seed.sql`
+7. Start dev: `npm run dev -- --port 3001 --host`
 
-## Route Admin
+## Public Routes
 
-- `/admin/login`
-- `/admin/dashboard`
-- `/admin/participants`
-- `/admin/surveys`
-- `/admin/action-plans`
-- `/admin/certificates`
+| Route | Description |
+|---|---|
+| `/` | Landing page |
+| `/register` | Participant registration (name, school, class, WhatsApp, event day) |
+| `/success/[code]` | Registration confirmation with participant code |
+| `/checkin` | Check-in instructions |
+| `/checkin/[event_code]` | Self check-in form (scan QR → enter WhatsApp or code) |
+| `/survey` | Survey instructions |
+| `/survey/[event_code]` | Dynamic survey form (questions from database) |
+| `/certificate` | Certificate search |
+| `/certificate/[code]` | Printable HTML certificate (A4 landscape) |
+| `/action-plan` | Action Plan form (URL only) |
 
-## Deploy Vercel
+## Admin Routes
 
-Untuk MVP lokal ini app memakai PostgreSQL langsung dari Nuxt server. Jika ingin deploy ke Vercel, gunakan database PostgreSQL hosted yang dapat diakses dari Vercel dan set `DATABASE_URL` ke host tersebut. Jangan gunakan PostgreSQL lokal untuk deploy publik.
+| Route | Description |
+|---|---|
+| `/admin/login` | Admin login |
+| `/admin/dashboard` | Overview stats, per-day/per-class/per-school charts, participant status table |
+| `/admin/participants` | Search, filter, export participants |
+| `/admin/surveys` | View all survey responses (dynamic columns) |
+| `/admin/action-plans` | Review Action Plan URLs, set judging status |
+| `/admin/certificates` | Monitor certificate eligibility and view status |
+| `/admin/event-qr` | Generate and print QR codes for check-in and survey |
+| `/admin/survey-questions` | Add, edit, delete survey questions |
 
-## Catatan MVP Budget
+## Admin Auth
 
-Fitur yang sengaja tidak dibuat: WhatsApp gateway otomatis, upload foto/video, generate PDF server-side, scoring juri kompleks, queue worker, realtime websocket, dan VPS. Sertifikat berupa HTML printable dengan `window.print()`.
+- Default password: set via `NUXT_PUBLIC_ADMIN_PASSWORD` env
+- Session stored in `dialog-admin` cookie
+- Route middleware protects all admin pages
 
-## Catatan Security
+## Database Structure
 
-Operasi database sekarang berjalan lewat Nuxt server API, bukan dari frontend langsung. Login admin masih password sederhana untuk MVP; untuk produksi gunakan auth yang lebih kuat.
+- `participants` — Registration data, attendance, certificate status
+- `survey_responses` — Dynamic JSONB answers linked to participants
+- `survey_questions` — Configurable questions (rating/choice/textarea)
+- `action_plans` — Participant action plans with judging status
+- `admin_users` — Admin accounts
+
+## Features
+
+- **Registration:** Free-text school/origin input, WhatsApp normalization, duplicate detection
+- **Check-in:** QR code with URL containing event token + 4-digit code, scan with any camera app
+- **Survey:** Dynamic questions from database, stored as JSONB, admin-configurable
+- **Certificate:** Printable HTML (A4 landscape), eligibility check (attended + survey completed)
+- **Action Plan:** URL-only submission, manual judging (candidate/winners/awards)
+- **Admin Dashboard:** Bar charts for per-day, per-class, and per-school data; Excel export
+- **Filtering:** By event day, attendance, survey status, certificate eligibility
+- **Multi-school:** School column auto-shown/hidden based on `NUXT_PUBLIC_SCHOOL_NAMES` config
+
+## Export
+
+All admin tables support Excel export (`.xlsx`) via SheetJS with filenames matching the page name.
+
+## Deploy
+
+For production deployment, use a PostgreSQL cloud provider (Neon, Supabase, Railway) and set `DATABASE_URL` accordingly. Run `sql/seed.sql` (schema only) on the production database — skip dummy data.
+
+## MVP Limitations
+
+- No WhatsApp gateway
+- No file/image upload
+- No server-side PDF generation
+- No real-time WebSocket
+- No complex judging/scoring
+- Certificate = printable HTML via `window.print()`
