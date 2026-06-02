@@ -124,7 +124,7 @@ alter table survey_responses enable row level security;
 alter table action_plans enable row level security;
 
 -- MVP policy: public form and admin dashboard use anon key.
--- For production hardening, move writes/admin reads into Nuxt server routes or Supabase Auth policies.
+-- For production hardening, move writes/admin reads into Nuxt server routes or proper auth.
 drop policy if exists "mvp participants read" on participants;
 create policy "mvp participants read" on participants for select using (true);
 drop policy if exists "mvp participants insert" on participants;

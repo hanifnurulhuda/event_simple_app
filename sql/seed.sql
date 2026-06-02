@@ -1,5 +1,5 @@
--- Run this against your production PostgreSQL (Neon/Supabase/Railway) database
--- via: psql $DATABASE_URL -f supabase/seed.sql
+-- Run this against your production PostgreSQL database
+-- via: psql $DATABASE_URL -f sql/seed.sql
 
 create extension if not exists pgcrypto;
 

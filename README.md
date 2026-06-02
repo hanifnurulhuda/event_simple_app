@@ -8,7 +8,7 @@ MVP Nuxt 3 + Tailwind CSS + PostgreSQL lokal untuk registrasi peserta, self chec
 2. Copy `.env.example` menjadi `.env`
 3. Isi `DATABASE_URL=postgres://postgres:postgres@localhost:5432/simple_event` dan `NUXT_PUBLIC_ADMIN_PASSWORD`
 4. Buat database lokal: `createdb -U postgres simple_event`
-5. Jalankan schema: `psql -U postgres -d simple_event -f supabase/schema.sql`
+5. Jalankan schema: `psql -U postgres -d simple_event -f sql/schema.sql`
 6. Jalankan app: `npm run dev`
 
 ## Route Publik
