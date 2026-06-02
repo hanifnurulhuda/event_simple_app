@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-slate-50 text-slate-900 antialiased;
+}
+
+.app-shell {
+  @apply min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(185,28,28,0.16),_transparent_30%),linear-gradient(135deg,#fff_0%,#f8fafc_45%,#e2e8f0_100%)];
+}
+
+.card {
+  @apply rounded-3xl border border-white/70 bg-white/90 p-5 shadow-xl shadow-slate-200/70 backdrop-blur;
+}
+
+.input {
+  @apply w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base outline-none transition focus:border-red-700 focus:ring-4 focus:ring-red-100;
+}
+
+.label {
+  @apply mb-2 block text-sm font-semibold text-slate-700;
+}
+
+.btn-primary {
+  @apply inline-flex items-center justify-center rounded-2xl bg-red-700 px-5 py-3 font-bold text-white shadow-lg shadow-red-200 transition hover:bg-red-800 disabled:cursor-not-allowed disabled:opacity-60;
+}
+
+.btn-secondary {
+  @apply inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-white px-5 py-3 font-bold text-slate-800 transition hover:border-red-200 hover:bg-red-50;
+}
+
+.badge {
+  @apply rounded-full px-3 py-1 text-xs font-bold;
+}
+
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 10mm;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: white !important;
+  }
+
+  .app-shell {
+    background: white !important;
+    min-height: 0 !important;
+  }
+
+  header,
+  .no-print {
+    display: none !important;
+  }
+
+  .app-shell > section:first-of-type {
+    display: none !important;
+  }
+
+  .certificate-page {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    background: white !important;
+  }
+
+  .certificate-page > div {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 180mm !important;
+    aspect-ratio: auto !important;
+    border: 12px double #b91c1c !important;
+    padding: 48px 56px !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+  }
+
+  .qr-print-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 24px !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 12px !important;
+  }
+
+  .qr-print-grid section {
+    break-inside: avoid !important;
+    box-shadow: none !important;
+  }
+
+  .qr-print-grid img {
+    width: 260px !important;
+    height: 260px !important;
+    max-width: 100% !important;
+  }
+
+  html.print-target-checkin .qr-survey-section,
+  html.print-target-survey .qr-checkin-section {
+    display: none !important;
+  }
+
+  html.print-target-checkin .qr-print-grid,
+  html.print-target-survey .qr-print-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  html.print-target-checkin .qr-print-grid section,
+  html.print-target-survey .qr-print-grid section {
+    max-width: 400px !important;
+    margin: 0 auto !important;
+  }
+}

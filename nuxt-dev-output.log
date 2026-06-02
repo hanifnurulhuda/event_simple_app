@@ -1,0 +1,113 @@
+|
+•  [32mNuxt [1m3.21.6[22m[39m[90m (with [39m[90mNitro [1m2.13.4[22m[39m[90m, Vite [1m7.3.5[22m[39m[90m and Vue [1m3.5.35[22m[39m[90m)[39m
+
+ 
+              █▀▀▀▀▀▀▀██▀██▀▀█▀▀█▀▀▀▀▀▀▀█
+              █ █▀▀▀█ █ ▀▀  ▄█▄ █ █▀▀▀█ █
+              █ █   █ █▀▄▄▄█▀█ ▄█ █   █ █
+              █ ▀▀▀▀▀ █ ▄▀▄▀█ ▄▀█ ▀▀▀▀▀ █
+              █▀▀█▀██▀▀▄▄▀█▄▀▄▄██▀▀▀█▀▀██
+              █▀▀▄█▀█▀▄▀▀ ▄█  ██ ▄ ▀██▀ █
+              ██  ▀▄▀▀▀████▀  ▀ █  ▄▀█▀▀█
+              █▀▄  ▄█▀ ▄▄ ▄ █▄█ ▀ ▀█▄ █ █
+              █▀  ▀▀█▀▄▄ ▄▀▄▄▀▄▀ ▀ ▀ ▀▄██
+              █▀▀▀▀▀▀▀█  ▀██▄▀▀ █▀█ ▄▄▀ █
+              █ █▀▀▀█ ██▄█ ▀▀▄▄ ▀▀▀ ▄▄█ █
+              █ █   █ █▄    ███▄▄█▀ ▀ █▀█
+              █ ▀▀▀▀▀ █ ▄▀  ▄▀█ ▄▄▀█▄█▀▀█
+              ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+ 
+[32m  ➜ Local:   [39m [36m[4mhttp://0.0.0.0:[1m3001[22m/[24m[39m
+[35m  ➜ Network: [39m [36m[4mhttp://10.0.30.40:[1m3001[22m/[24m[39m[90m [QR code][39m
+[35m  ➜ Network: [39m [36m[4mhttp://192.168.192.193:[1m3001[22m/[24m[39m
+
+[90m[[90mnuxt:tailwindcss[90m][39m [36mi[39m Using default Tailwind CSS file
+[33m  ➜ DevTools: [39m[2mpress [22m[32mShift[39m[2m + [22m[32mAlt[39m[2m + [22m[32mD[39m[2m in the browser (v3.2.4)[22m
+
+[32m√[39m Vite client built in 44ms
+[32m√[39m Vite server built in 480ms
+[90m[[90mnitro[90m][39m [32m√[39m Nuxt Nitro server built in 910ms
+[36mi[39m Vite server warmed up in 1ms
+[36mi[39m Vite client warmed up in 3ms
+[32m√[39m Vite server hmr 1 files in 807.547ms
+[36mi[39m [32mhmr update [39m[2m/pages/certificate.vue, /node_modules/tailwindcss/tailwind.css, /assets/css/main.css, /node_modules/tailwindcss/tailwind.css?direct, /assets/css/main.css?direct, /pages/certificate.vue?macro=true, /@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs[22m
+[36mi[39m [32mhmr update [39m[2m/node_modules/tailwindcss/tailwind.css, /assets/css/main.css, /@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs, /pages/certificate.vue?macro=true[22m
+[36mi[39m [32mhmr update [39m[2m/pages/certificate/[participant_code].vue, /node_modules/tailwindcss/tailwind.css, /assets/css/main.css, /node_modules/tailwindcss/tailwind.css?direct, /assets/css/main.css?direct, /pages/certificate/[participant_code].vue?macro=true, /@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs[22m
+[36mi[39m [32mhmr update [39m[2m/node_modules/tailwindcss/tailwind.css, /assets/css/main.css, /@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs, /pages/certificate/[participant_code].vue?macro=true[22m
+[36mi[39m [32mhmr update [39m[2m/pages/certificate.vue?macro=true, /pages/certificate.vue, /node_modules/tailwindcss/tailwind.css, /assets/css/main.css, /node_modules/tailwindcss/tailwind.css?direct, /assets/css/main.css?direct[22m
+[36mi[39m [32mhmr update [39m[2m/node_modules/tailwindcss/tailwind.css, /assets/css/main.css, /pages/certificate.vue?macro=true, /@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs[22m
+[36mi[39m [32mhmr update [39m[2m/@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs[22m
+[36mi[39m [32mhmr update [39m[2m/@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs[22m[2m (x2)[22m
+[36mi[39m [32mhmr update [39m[2m/@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs[22m[2m (x3)[22m
+[36mi[39m [32mhmr update [39m[2m/@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs[22m[2m (x4)[22m
+[32m√[39m Vite server hmr 13 files in 51.653ms
+[36mi[39m [32mhmr update [39m[2m/node_modules/tailwindcss/tailwind.css, /assets/css/main.css, /@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs, /pages/certificate/[participant_code].vue?macro=true[22m
+[36mi[39m [32mhmr update [39m[2m/pages/certificate/[participant_code].vue, /node_modules/tailwindcss/tailwind.css, /assets/css/main.css, /node_modules/tailwindcss/tailwind.css?direct, /assets/css/main.css?direct, /pages/certificate/[participant_code].vue?macro=true, /@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs[22m
+[32m√[39m Vite server hmr 9 files in 80.013ms
+[43m[30m WARN [39m[49m [nuxt] [36museAsyncData (used at D:\AI Experiment\App_Simple_Event\node_modules\nuxt\dist\app\utils.js:29:79)[39m must return a value (it should not be [36mundefined[39m or [36mnull[39m) or the request may be duplicated on the client side.
+[36mi[39m [32mhmr update [39m[2m/node_modules/tailwindcss/tailwind.css, /assets/css/main.css, /@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs, /pages/certificate/[participant_code].vue?macro=true[22m
+[36mi[39m [32mhmr update [39m[2m/pages/certificate/[participant_code].vue, /node_modules/tailwindcss/tailwind.css, /assets/css/main.css, /node_modules/tailwindcss/tailwind.css?direct, /assets/css/main.css?direct, /pages/certificate/[participant_code].vue?macro=true, /@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs[22m
+[36mi[39m [32mhmr update [39m[2m/assets/css/main.css, /assets/css/main.css?direct[22m
+[36mi[39m [32mhmr update [39m[2m/assets/css/main.css[22m
+[36mi[39m [32mhmr update [39m[2m/pages/certificate/[participant_code].vue, /node_modules/tailwindcss/tailwind.css, /assets/css/main.css, /node_modules/tailwindcss/tailwind.css?direct, /assets/css/main.css?direct, /pages/certificate/[participant_code].vue?macro=true, /@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs[22m
+[36mi[39m [32mhmr update [39m[2m/node_modules/tailwindcss/tailwind.css, /assets/css/main.css, /@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs, /pages/certificate/[participant_code].vue?macro=true[22m
+[36mi[39m [32mpage reload [39m[2mvirtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Fmiddleware.mjs[22m
+[36mi[39m [32mpage reload [39m[2mvirtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Fmiddleware.mjs[22m[2m (x2)[22m
+[32m√[39m Vite server hmr 14 files in 233.246ms
+[36mi[39m [32mhmr update [39m[2m/assets/css/main.css, /assets/css/main.css?direct[22m
+[36mi[39m [32mhmr update [39m[2m/assets/css/main.css[22m
+[36mi[39m [32mpage reload [39m[2mvirtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Fmiddleware.mjs[22m
+[36mi[39m [32mpage reload [39m[2mvirtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Fmiddleware.mjs[22m[2m (x2)[22m
+[32m√[39m Vite server hmr 11 files in 169.763ms
+[36mi[39m [32mhmr update [39m[2m/assets/css/main.css, /assets/css/main.css?direct[22m
+[36mi[39m [32mhmr update [39m[2m/assets/css/main.css[22m
+[36mi[39m [32mhmr update [39m[2m/assets/css/main.css, /assets/css/main.css?direct[22m
+[36mi[39m [32mhmr update [39m[2m/assets/css/main.css[22m
+[36mi[39m [32mhmr update [39m[2m/assets/css/main.css, /assets/css/main.css?direct[22m
+[36mi[39m [32mhmr update [39m[2m/assets/css/main.css[22m
+[32m√[39m Vite server hmr 5 files in 106.957ms
+[90m[[90mnitro[90m][39m [32m√[39m Nuxt Nitro server built in 1784ms
+[90m[[90mnitro[90m][39m [32m√[39m Nuxt Nitro server built in 1221ms
+[90m[[90mnitro[90m][39m [32m√[39m Nuxt Nitro server built in 1082ms
+[36mi[39m [32mhmr update [39m[2m/node_modules/tailwindcss/tailwind.css, /assets/css/main.css, /node_modules/tailwindcss/tailwind.css?direct, /assets/css/main.css?direct, /pages/survey/[event_code].vue?macro=true, /@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs[22m
+[36mi[39m [32mhmr update [39m[2m/node_modules/tailwindcss/tailwind.css, /assets/css/main.css, /pages/survey/[event_code].vue?macro=true, /@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs[22m
+[36mi[39m [32mhmr update [39m[2m/node_modules/tailwindcss/tailwind.css, /assets/css/main.css, /node_modules/tailwindcss/tailwind.css?direct, /assets/css/main.css?direct, /pages/survey/[event_code].vue?macro=true, /@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs[22m
+[36mi[39m [32mhmr update [39m[2m/node_modules/tailwindcss/tailwind.css, /assets/css/main.css, /pages/survey/[event_code].vue?macro=true, /@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs[22m
+[90m[[90mnitro[90m][39m [32m√[39m Nuxt Nitro server built in 784ms
+[36mi[39m [32mhmr update [39m[2m/@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs[22m
+[36mi[39m [32mhmr update [39m[2m/@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs[22m[2m (x2)[22m
+[36mi[39m [32mhmr update [39m[2m/components/AdminHeader.vue, /node_modules/tailwindcss/tailwind.css, /assets/css/main.css, /node_modules/tailwindcss/tailwind.css?direct, /assets/css/main.css?direct[22m
+[36mi[39m [32mhmr update [39m[2m/node_modules/tailwindcss/tailwind.css, /assets/css/main.css, /@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs[22m
+[32m√[39m Vite server hmr 19 files in 309.782ms
+[36mi[39m [32mhmr update [39m[2m/pages/admin/surveys.vue, /node_modules/tailwindcss/tailwind.css, /assets/css/main.css, /node_modules/tailwindcss/tailwind.css?direct, /assets/css/main.css?direct, /pages/admin/surveys.vue?macro=true, /@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs[22m
+[36mi[39m [32mhmr update [39m[2m/node_modules/tailwindcss/tailwind.css, /assets/css/main.css, /pages/admin/surveys.vue?macro=true, /@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs[22m
+[36mi[39m [32mhmr update [39m[2m/node_modules/tailwindcss/tailwind.css, /assets/css/main.css, /pages/admin/surveys.vue?macro=true, /@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs[22m[2m (x2)[22m
+[36mi[39m [32mhmr update [39m[2m/pages/admin/surveys.vue, /node_modules/tailwindcss/tailwind.css, /assets/css/main.css, /node_modules/tailwindcss/tailwind.css?direct, /assets/css/main.css?direct, /pages/admin/surveys.vue?macro=true, /@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs[22m
+[90m[[90mnitro[90m][39m [32m√[39m Nuxt Nitro server built in 337ms
+[36mi[39m [32mhmr update [39m[2m/node_modules/tailwindcss/tailwind.css, /assets/css/main.css, /pages/survey/[event_code].vue?macro=true, /@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs[22m
+[36mi[39m [32mhmr update [39m[2m/node_modules/tailwindcss/tailwind.css, /assets/css/main.css, /node_modules/tailwindcss/tailwind.css?direct, /assets/css/main.css?direct, /pages/survey/[event_code].vue?macro=true, /@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs[22m
+[36mi[39m [32mhmr update [39m[2m/pages/admin/surveys.vue, /node_modules/tailwindcss/tailwind.css, /assets/css/main.css, /node_modules/tailwindcss/tailwind.css?direct, /assets/css/main.css?direct, /pages/admin/surveys.vue?macro=true, /@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs[22m
+[36mi[39m [32mhmr update [39m[2m/node_modules/tailwindcss/tailwind.css, /assets/css/main.css, /pages/admin/surveys.vue?macro=true, /@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs[22m
+[36mi[39m [32mhmr update [39m[2m/pages/admin/survey-questions.vue, /node_modules/tailwindcss/tailwind.css, /assets/css/main.css, /node_modules/tailwindcss/tailwind.css?direct, /assets/css/main.css?direct, /pages/admin/survey-questions.vue?macro=true, /@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs[22m
+[36mi[39m [32mhmr update [39m[2m/node_modules/tailwindcss/tailwind.css, /assets/css/main.css, /@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs, /pages/admin/survey-questions.vue?macro=true[22m
+[90m[[90mnitro[90m][39m [32m√[39m Nuxt Nitro server built in 734ms
+[36mi[39m [32mhmr update [39m[2m/node_modules/tailwindcss/tailwind.css, /assets/css/main.css, /@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs, /pages/admin/participants.vue?macro=true[22m
+[36mi[39m [32mhmr update [39m[2m/pages/admin/participants.vue, /node_modules/tailwindcss/tailwind.css, /assets/css/main.css, /node_modules/tailwindcss/tailwind.css?direct, /assets/css/main.css?direct, /pages/admin/participants.vue?macro=true, /@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs[22m
+[36mi[39m [32m✨ new dependencies optimized: [33mxlsx[32m[39m
+[36mi[39m [32m✨ optimized dependencies changed. reloading[39m
+[36mi[39m [32mhmr update [39m[2m/pages/admin/certificates.vue, /node_modules/tailwindcss/tailwind.css, /assets/css/main.css, /node_modules/tailwindcss/tailwind.css?direct, /assets/css/main.css?direct, /pages/admin/certificates.vue?macro=true, /@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs[22m
+[36mi[39m [32mhmr update [39m[2m/node_modules/tailwindcss/tailwind.css, /assets/css/main.css, /pages/admin/certificates.vue?macro=true, /@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs[22m
+[36mi[39m [32mpage reload [39m[2mvirtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Fmiddleware.mjs[22m
+[36mi[39m [32mpage reload [39m[2mvirtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Fmiddleware.mjs[22m[2m (x2)[22m
+[36mi[39m [32mhmr update [39m[2m/node_modules/tailwindcss/tailwind.css, /assets/css/main.css, /pages/admin/action-plans.vue?macro=true, /@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs[22m
+[36mi[39m [32mhmr update [39m[2m/pages/admin/action-plans.vue, /node_modules/tailwindcss/tailwind.css, /assets/css/main.css, /node_modules/tailwindcss/tailwind.css?direct, /assets/css/main.css?direct, /pages/admin/action-plans.vue?macro=true, /@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs[22m
+[32m√[39m Vite server hmr 22 files in 795.984ms
+[36mi[39m [32mhmr update [39m[2m/pages/admin/dashboard.vue, /node_modules/tailwindcss/tailwind.css, /assets/css/main.css, /node_modules/tailwindcss/tailwind.css?direct, /assets/css/main.css?direct, /pages/admin/dashboard.vue?macro=true, /@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs[22m
+[36mi[39m [32mhmr update [39m[2m/node_modules/tailwindcss/tailwind.css, /assets/css/main.css, /@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs, /pages/admin/dashboard.vue?macro=true[22m
+[36mi[39m [32mhmr update [39m[2m/pages/admin/dashboard.vue, /node_modules/tailwindcss/tailwind.css, /assets/css/main.css, /node_modules/tailwindcss/tailwind.css?direct, /assets/css/main.css?direct, /pages/admin/dashboard.vue?macro=true, /@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs[22m
+[36mi[39m [32mhmr update [39m[2m/node_modules/tailwindcss/tailwind.css, /assets/css/main.css, /@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs, /pages/admin/dashboard.vue?macro=true[22m
+[36mi[39m [32mpage reload [39m[2mvirtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Fmiddleware.mjs[22m
+[36mi[39m [32mpage reload [39m[2mvirtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Fmiddleware.mjs[22m[2m (x2)[22m
+[32m√[39m Vite server hmr 13 files in 772.524ms
+[36mi[39m [32mhmr update [39m[2m/node_modules/tailwindcss/tailwind.css, /assets/css/main.css, /@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs, /pages/admin/survey-questions.vue?macro=true[22m
+[36mi[39m [32mhmr update [39m[2m/pages/admin/survey-questions.vue, /node_modules/tailwindcss/tailwind.css, /assets/css/main.css, /node_modules/tailwindcss/tailwind.css?direct, /assets/css/main.css?direct, /pages/admin/survey-questions.vue?macro=true, /@id/virtual:nuxt:D%3A%2FAI%20Experiment%2FApp_Simple_Event%2F.nuxt%2Froutes.mjs[22m

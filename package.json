@@ -1,0 +1,26 @@
+{
+  "name": "dialog-kebangsaan-simple-event",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@nuxtjs/tailwindcss": "^6.12.2",
+    "@types/qrcode": "^1.5.6",
+    "html5-qrcode": "^2.3.8",
+    "nuxt": "^3.13.2",
+    "pg": "^8.13.1",
+    "qrcode": "^1.5.4",
+    "vue": "^3.5.11",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.11.10",
+    "typescript": "^5.6.2"
+  }
+}
