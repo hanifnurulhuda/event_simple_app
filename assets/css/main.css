@@ -36,6 +36,10 @@ body {
   @apply inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-white px-5 py-3 font-bold text-slate-800 transition hover:border-red-200 hover:bg-red-50;
 }
 
+.spinner {
+  @apply h-8 w-8 animate-spin rounded-full border-4 border-slate-200 border-t-red-700;
+}
+
 .badge {
   @apply rounded-full px-3 py-1 text-xs font-bold;
 }

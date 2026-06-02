@@ -14,6 +14,8 @@
           </div>
         </div>
         <StatusMessage :message="message" :tone="tone" />
+        <div v-if="loading" class="mt-12 flex justify-center"><div class="spinner" /></div>
+        <template v-else>
         <div class="mt-6 grid gap-6">
           <div v-for="(q, i) in items" :key="q.question_key" class="rounded-2xl border border-slate-200 bg-white p-5">
             <div class="mb-3 flex items-center gap-2">
@@ -51,6 +53,7 @@
             </div>
           </div>
         </div>
+      </template>
       </div>
     </section>
   </main>
@@ -66,6 +69,7 @@ const tone = ref<'success' | 'error' | 'info'>('info')
 const saving = ref(false)
 const items = ref<SurveyQuestion[]>([])
 const optionsText = reactive<Record<string, string>>({})
+const loading = ref(true)
 
 onMounted(async () => {
   items.value = await $fetch<SurveyQuestion[]>('/api/admin/survey-questions')
@@ -74,6 +78,7 @@ onMounted(async () => {
       optionsText[q.question_key] = (q.options || []).join(', ')
     }
   }
+  loading.value = false
 })
 
 const updateOptions = (q: SurveyQuestion) => {

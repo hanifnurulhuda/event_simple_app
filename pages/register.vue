@@ -7,7 +7,7 @@
         <p class="mt-2 text-slate-600">Isi data sesuai identitas. Nomor WhatsApp dipakai untuk check-in, survey, sertifikat, dan Action Plan.</p>
         <form class="mt-6 grid gap-4" @submit.prevent="submit">
           <div><label class="label">Nama lengkap</label><input v-model="form.name" class="input" required /></div>
-          <div><label class="label">Sekolah</label><select v-model="form.school" class="input" required><option value="">Pilih sekolah</option><option v-for="s in schools" :key="s" :value="s">{{ s }}</option></select></div>
+          <div><label class="label">Sekolah / Asal</label><input v-model="form.school" class="input" required placeholder="Nama sekolah atau instansi" /></div>
           <div><label class="label">Kelas</label><input v-model="form.class_name" class="input" required placeholder="Contoh: XI IPA 1" /></div>
           <div><label class="label">Nomor WhatsApp</label><input v-model="form.whatsapp" class="input" required inputmode="tel" placeholder="08xxxxxxxxxx" /></div>
           <div>
@@ -27,8 +27,6 @@
 
 <script setup lang="ts">
 const router = useRouter()
-const config = useRuntimeConfig()
-const schools = computed(() => config.public.schoolNames.split(',').map((s: string) => s.trim()).filter(Boolean))
 const loading = ref(false)
 const message = ref('')
 const tone = ref<'success' | 'error' | 'info'>('info')

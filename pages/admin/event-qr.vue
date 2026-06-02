@@ -16,7 +16,8 @@
         </div>
       </div>
 
-      <div class="qr-print-grid grid gap-6 md:grid-cols-2">
+      <div v-if="loading" class="mt-12 flex justify-center"><div class="spinner" /></div>
+      <div v-else class="qr-print-grid grid gap-6 md:grid-cols-2">
         <section class="qr-checkin-section card text-center">
           <p class="text-sm font-bold uppercase tracking-wider text-red-700">QR Check-in</p>
           <h2 class="mt-2 text-2xl font-extrabold text-navy">Kehadiran Peserta</h2>
@@ -45,6 +46,7 @@ import { createEventCode } from '~/data/eventQr'
 const checkinUrl = ref('')
 const surveyUrl = ref('')
 const toast = ref('')
+const loading = ref(true)
 let toastTimer: ReturnType<typeof setTimeout> | undefined
 
 const printAll = async () => {
@@ -74,6 +76,7 @@ const generateQrUrls = (showToast = true) => {
   if (!import.meta.client) return
   checkinUrl.value = `${window.location.origin}/checkin/${createEventCode('checkin')}`
   surveyUrl.value = `${window.location.origin}/survey/${createEventCode('survey')}`
+  loading.value = false
   if (showToast) {
     toast.value = 'QR Check-in dan Survey berhasil digenerate ulang.'
     if (toastTimer) clearTimeout(toastTimer)
