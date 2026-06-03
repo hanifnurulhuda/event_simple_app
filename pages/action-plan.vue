@@ -15,7 +15,15 @@
           <div v-if="existing" class="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-800">
             <p class="font-extrabold">Action Plan sebelumnya sudah terkirim.</p>
             <a v-if="existing.drive_link" class="mt-2 inline-block break-all font-bold underline" :href="existing.drive_link" target="_blank">{{ existing.drive_link }}</a>
-            <p class="mt-2 font-semibold">Isi URL baru di bawah untuk mengganti submission terakhir.</p>
+            <p class="mt-2 font-semibold">Isi data baru di bawah untuk mengganti submission terakhir.</p>
+          </div>
+          <div>
+            <label class="label">Judul Action Plan</label>
+            <input v-model="actionTitle" class="input" required placeholder="Contoh: Gerakan Literasi Kebangsaan di Sekolah" />
+          </div>
+          <div>
+            <label class="label">Deskripsi <span class="text-slate-400">(opsional)</span></label>
+            <textarea v-model="actionDescription" class="input min-h-28" placeholder="Ceritakan singkat ide, tujuan, atau kegiatan Action Plan Anda." />
           </div>
           <div>
             <label class="label">URL Action Plan</label>
@@ -42,6 +50,8 @@ const existing = ref<ActionPlan | null>(null)
 const loading = ref(false)
 const message = ref('')
 const tone = ref<'success' | 'error' | 'info'>('info')
+const actionTitle = ref('')
+const actionDescription = ref('')
 const actionUrl = ref('')
 
 const loadParticipant = async () => {
@@ -55,6 +65,8 @@ const loadParticipant = async () => {
     }
     participant.value = found
     existing.value = await $fetch<ActionPlan | null>('/api/action-plans', { query: { participant_id: found.id } })
+    actionTitle.value = existing.value?.title || ''
+    actionDescription.value = existing.value?.description || ''
     actionUrl.value = existing.value?.drive_link || ''
     tone.value = 'info'
     message.value = existing.value ? 'Anda bisa mengganti URL Action Plan dengan link terbaru.' : 'Silakan masukkan URL Action Plan Anda.'
@@ -70,7 +82,15 @@ const submit = async () => {
   if (!participant.value) return
   loading.value = true
   try {
-    const saved = await $fetch<ActionPlan>('/api/action-plans', { method: 'POST', body: { participant_id: participant.value.id, action_url: actionUrl.value } })
+    const saved = await $fetch<ActionPlan>('/api/action-plans', {
+      method: 'POST',
+      body: {
+        participant_id: participant.value.id,
+        title: actionTitle.value,
+        description: actionDescription.value,
+        action_url: actionUrl.value
+      }
+    })
     existing.value = saved
     tone.value = 'success'
     message.value = 'Action Plan Anda berhasil dikirim. Panitia akan melakukan seleksi secara manual.'
@@ -79,7 +99,7 @@ const submit = async () => {
     message.value = getPublicErrorMessage(error, {
       fallback: 'Action Plan belum berhasil dikirim. Silakan coba lagi atau hubungi panitia.',
       byStatus: {
-        400: 'URL Action Plan wajib diisi dengan benar.'
+        400: 'Judul dan URL Action Plan wajib diisi dengan benar.'
       }
     })
   } finally {
@@ -91,6 +111,8 @@ const resetForm = () => {
   participant.value = null
   existing.value = null
   identifier.value = ''
+  actionTitle.value = ''
+  actionDescription.value = ''
   actionUrl.value = ''
   message.value = ''
 }

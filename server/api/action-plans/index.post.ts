@@ -1,9 +1,11 @@
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
+  const title = String(body.title || '').trim()
+  const description = String(body.description || '').trim()
   const actionUrl = String(body.action_url || body.drive_link || '').trim()
 
-  if (!body.participant_id || !actionUrl) {
-    throw createError({ statusCode: 400, statusMessage: 'Participant dan URL Action Plan wajib diisi.' })
+  if (!body.participant_id || !title || !actionUrl) {
+    throw createError({ statusCode: 400, statusMessage: 'Participant, judul, dan URL Action Plan wajib diisi.' })
   }
 
   const db = useDb()
@@ -23,11 +25,11 @@ export default defineEventHandler(async (event) => {
      ), updated as (
        update participants set action_plan_submitted = true where id = $1 returning id
      )
-     select saved.* from saved`,
+      select saved.* from saved`,
     [
       body.participant_id,
-      body.title || 'Action Plan Gen Z Merawat Indonesia',
-      body.description || 'Submission Action Plan berupa URL laporan/foto/video/media sosial.',
+      title,
+      description,
       body.location || null,
       actionUrl,
       body.social_link || null,
