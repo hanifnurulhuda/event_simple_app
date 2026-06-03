@@ -9,7 +9,7 @@
           <div><label class="label">Nama lengkap</label><input v-model="form.name" class="input" required /></div>
           <div><label class="label">Sekolah / Asal</label><input v-model="form.school" class="input" required placeholder="Nama sekolah atau instansi" /></div>
           <div><label class="label">Kelas <span class="text-slate-400">(opsional)</span></label><input v-model="form.class_name" class="input" placeholder="Contoh: XI IPA 1" /></div>
-          <div><label class="label">Nomor WhatsApp <span class="text-slate-400">(opsional)</span></label><input v-model="form.whatsapp" class="input" inputmode="tel" placeholder="08xxxxxxxxxx" /></div>
+          <div><label class="label">Nomor WhatsApp</label><input v-model="form.whatsapp" class="input" required inputmode="tel" placeholder="08xxxxxxxxxx" /></div>
           <div>
             <label class="label">Hari acara</label>
             <select v-model="form.event_day" class="input" required>
@@ -52,7 +52,10 @@ const submit = async () => {
   } catch (error) {
     tone.value = 'error'
     message.value = getPublicErrorMessage(error, {
-      fallback: 'Pendaftaran belum berhasil. Silakan coba lagi atau hubungi panitia.'
+      fallback: 'Pendaftaran belum berhasil. Silakan coba lagi atau hubungi panitia.',
+      byStatus: {
+        400: 'Nomor WhatsApp wajib diisi.'
+      }
     })
   } finally {
     loading.value = false

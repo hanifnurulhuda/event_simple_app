@@ -24,7 +24,7 @@ Nuxt 3 + Tailwind CSS + PostgreSQL MVP for participant registration, self check-
 | Route | Description |
 |---|---|
 | `/` | Landing page |
-| `/register` | Participant registration (name, school/origin, optional class, optional WhatsApp, event day) |
+| `/register` | Participant registration (name, school/origin, optional class, WhatsApp, event day) |
 | `/success/[code]` | Registration confirmation with participant code |
 | `/checkin` | Check-in instructions |
 | `/checkin/[event_code]` | Self check-in form (scan QR → enter WhatsApp or code) |
@@ -68,7 +68,7 @@ Nuxt 3 + Tailwind CSS + PostgreSQL MVP for participant registration, self check-
 
 ## Features
 
-- **Registration:** Free-text school/origin input, optional class/WhatsApp, server-generated participant code/token, duplicate-safe insert
+- **Registration:** Free-text school/origin input, optional class, non-strict WhatsApp requirement, server-generated participant code/token, duplicate-safe insert
 - **Check-in:** Admin-generated QR code, DB-backed validation, idempotent one-query attendance update
 - **Survey:** Dynamic questions from database, stored as JSONB, admin-configurable, DB-backed QR validation
 - **Certificate:** Printable HTML (A4 landscape), eligibility check (attended + survey completed), guarded public view tracking
