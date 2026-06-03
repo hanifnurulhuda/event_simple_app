@@ -103,7 +103,7 @@ const loadParticipant = async () => {
     }
     if (found.survey_submitted) {
       tone.value = 'info'
-      message.value = 'Anda sudah pernah mengisi survey. Hubungi admin jika perlu reset.'
+      message.value = 'Anda sudah pernah mengisi survey.'
       return
     }
     participant.value = found
