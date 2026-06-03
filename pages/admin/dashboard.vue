@@ -17,7 +17,7 @@
             <div class="mb-4 border-b border-red-100 pb-3">
               <p class="text-xs font-bold uppercase tracking-wider text-red-600">Asal peserta</p>
               <h2 class="text-xl font-extrabold text-navy">Top Sekolah / Asal</h2>
-              <p class="mt-1 text-xs font-semibold text-slate-500">Top 3 asal terbesar, sisanya digabung sebagai Lainnya.</p>
+              <p class="mt-1 text-xs font-semibold text-slate-500">Top 3 asal terbesar.</p>
             </div>
             <div class="grid gap-4">
               <div v-for="s in schoolStats" :key="s.school" class="rounded-2xl border border-slate-100 bg-slate-50 p-3">
@@ -58,9 +58,9 @@
 
           <section class="card border-l-4 border-emerald-600">
             <div class="mb-4 border-b border-emerald-100 pb-3">
-              <p class="text-xs font-bold uppercase tracking-wider text-emerald-600">Rombongan belajar</p>
+              <p class="text-xs font-bold uppercase tracking-wider text-emerald-600">Data Kelas</p>
               <h2 class="text-xl font-extrabold text-navy">Top Kelas</h2>
-              <p class="mt-1 text-xs font-semibold text-slate-500">Top 6 kelas terbesar, sisanya digabung sebagai Lainnya.</p>
+              <p class="mt-1 text-xs font-semibold text-slate-500">Top 6 kelas terbesar.</p>
             </div>
             <div class="grid gap-4">
               <div v-for="k in classStats" :key="k.class_name" class="rounded-2xl border border-slate-100 bg-slate-50 p-3">
