@@ -50,7 +50,12 @@ const submit = async () => {
     await router.push(`/success/${data.participant_code}`)
   } catch (error) {
     tone.value = 'error'
-    message.value = error instanceof Error ? error.message : 'Pendaftaran gagal. Coba lagi.'
+    message.value = getPublicErrorMessage(error, {
+      fallback: 'Pendaftaran belum berhasil. Silakan coba lagi atau hubungi panitia.',
+      byStatus: {
+        400: 'Data pendaftaran belum lengkap. Silakan periksa kembali isian Anda.'
+      }
+    })
   } finally {
     loading.value = false
   }

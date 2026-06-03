@@ -58,6 +58,9 @@ const loadParticipant = async () => {
     actionUrl.value = existing.value?.drive_link || ''
     tone.value = 'info'
     message.value = existing.value ? 'Anda bisa mengganti URL Action Plan dengan link terbaru.' : 'Silakan masukkan URL Action Plan Anda.'
+  } catch {
+    tone.value = 'error'
+    message.value = 'Data peserta belum bisa dicek. Silakan coba lagi atau hubungi panitia.'
   } finally {
     loading.value = false
   }
@@ -73,7 +76,12 @@ const submit = async () => {
     message.value = 'Action Plan Anda berhasil dikirim. Panitia akan melakukan seleksi secara manual.'
   } catch (error) {
     tone.value = 'error'
-    message.value = error instanceof Error ? error.message : 'Action Plan gagal dikirim.'
+    message.value = getPublicErrorMessage(error, {
+      fallback: 'Action Plan belum berhasil dikirim. Silakan coba lagi atau hubungi panitia.',
+      byStatus: {
+        400: 'URL Action Plan wajib diisi dengan benar.'
+      }
+    })
   } finally {
     loading.value = false
   }

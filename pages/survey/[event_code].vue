@@ -108,6 +108,9 @@ const loadParticipant = async () => {
     }
     participant.value = found
     await loadQuestions()
+  } catch {
+    tone.value = 'error'
+    message.value = 'Data peserta belum bisa dicek. Silakan coba lagi atau hubungi panitia.'
   } finally {
     loading.value = false
   }
@@ -125,7 +128,13 @@ const submitSurvey = async () => {
     message.value = 'Terima kasih. Refleksi kegiatan Anda sudah tersimpan.'
   } catch (error) {
     tone.value = 'error'
-    message.value = error instanceof Error ? error.message : 'Survey gagal disimpan.'
+    message.value = getPublicErrorMessage(error, {
+      fallback: 'Survey belum berhasil dikirim. Silakan coba lagi atau hubungi panitia.',
+      byStatus: {
+        400: 'Data survey belum lengkap. Silakan periksa kembali isian Anda.',
+        403: 'QR survey tidak valid. Gunakan QR resmi dari panitia.'
+      }
+    })
   } finally {
     loading.value = false
   }

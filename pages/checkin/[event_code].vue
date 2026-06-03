@@ -70,7 +70,14 @@ const submit = async () => {
     message.value = 'Kehadiran Anda berhasil tercatat. Terima kasih sudah mengikuti Dialog Kebangsaan.'
   } catch (error) {
     tone.value = 'error'
-    message.value = error instanceof Error ? error.message : 'Check-in gagal. Coba lagi.'
+    message.value = getPublicErrorMessage(error, {
+      fallback: 'Check-in belum berhasil. Silakan coba lagi atau hubungi panitia.',
+      byStatus: {
+        400: 'Nomor WhatsApp atau kode peserta wajib diisi.',
+        403: 'QR check-in tidak valid. Gunakan QR resmi dari panitia.',
+        404: 'Data peserta tidak ditemukan. Periksa nomor WhatsApp atau kode peserta.'
+      }
+    })
   } finally {
     loading.value = false
   }

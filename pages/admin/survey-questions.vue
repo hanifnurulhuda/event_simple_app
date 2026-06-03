@@ -135,9 +135,9 @@ const saveAll = async () => {
     await $fetch('/api/admin/survey-questions', { method: 'PUT', body: { questions: payload } })
     tone.value = 'success'
     message.value = 'Semua pertanyaan berhasil disimpan.'
-  } catch (error) {
+  } catch {
     tone.value = 'error'
-    message.value = error instanceof Error ? error.message : 'Gagal menyimpan.'
+    message.value = 'Pertanyaan belum berhasil disimpan. Periksa koneksi lalu coba lagi.'
   } finally {
     saving.value = false
   }

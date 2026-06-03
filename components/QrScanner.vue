@@ -59,9 +59,9 @@ onMounted(async () => {
       () => {}
     )
     started.value = true
-  } catch (error) {
+  } catch {
     canUseLiveCamera.value = false
-    emit('error', error instanceof Error ? error.message : 'Kamera tidak bisa dibuka.')
+    emit('error', 'Kamera tidak bisa dibuka. Gunakan upload foto QR atau izinkan akses kamera di browser.')
   }
 })
 
