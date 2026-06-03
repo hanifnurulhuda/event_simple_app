@@ -1,4 +1,5 @@
 export default defineEventHandler(async (event) => {
+  requireAdmin(event)
   const body = await readBody<{ questions: { question_key: string; label: string; type: string; options: string[]; sort_order: number; is_active: boolean }[] }>(event)
   const db = useDb()
   const results = []

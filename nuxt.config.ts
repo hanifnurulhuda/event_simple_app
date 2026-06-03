@@ -7,8 +7,8 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
   runtimeConfig: {
     databaseUrl: process.env.DATABASE_URL || 'postgres://postgres:postgres@localhost:5432/simple_event',
+    adminPassword: process.env.NUXT_PUBLIC_ADMIN_PASSWORD || process.env.ADMIN_PASSWORD || 'admin-dialog-2024',
     public: {
-      adminPassword: process.env.NUXT_PUBLIC_ADMIN_PASSWORD || 'admin-dialog-2024',
       schoolNames: process.env.NUXT_PUBLIC_SCHOOL_NAMES || 'SMAN 2 Bontang'
     }
   },

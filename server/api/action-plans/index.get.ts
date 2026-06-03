@@ -7,6 +7,8 @@ export default defineEventHandler(async (event) => {
     return result.rows[0] || null
   }
 
+  requireAdmin(event)
+
   const where: string[] = []
   const params: unknown[] = []
   if (query.search) {

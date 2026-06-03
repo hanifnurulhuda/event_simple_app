@@ -49,9 +49,12 @@ Nuxt 3 + Tailwind CSS + PostgreSQL MVP for participant registration, self check-
 
 ## Admin Auth
 
-- Default password: set via `NUXT_PUBLIC_ADMIN_PASSWORD` env
-- Session stored in `dialog-admin` cookie
-- Route middleware protects all admin pages
+- Admin password: set via `NUXT_PUBLIC_ADMIN_PASSWORD` or `ADMIN_PASSWORD` env.
+- Login is handled server-side through `/api/admin/login`.
+- Admin API access requires a signed httpOnly `dialog-admin-session` cookie.
+- `dialog-admin` is only a non-sensitive UI flag; API endpoints do not trust it.
+- Route middleware protects admin pages, and server utilities protect admin/list APIs.
+- Login attempts are rate-limited per IP to slow brute-force attempts.
 
 ## Database Structure
 
@@ -94,7 +97,7 @@ For production deployment, use a PostgreSQL cloud provider (Neon, Supabase, Rail
 
 1. Run `sql/schema.sql` on the production database.
 2. Optionally run `sql/seed.sql` only if dummy/demo participants are needed.
-3. Set required environment variables in Vercel: `DATABASE_URL`, `NUXT_PUBLIC_ADMIN_PASSWORD`, and `NUXT_PUBLIC_SCHOOL_NAMES`.
+3. Set required environment variables in Vercel: `DATABASE_URL`, `NUXT_PUBLIC_ADMIN_PASSWORD` or `ADMIN_PASSWORD`, and `NUXT_PUBLIC_SCHOOL_NAMES`.
 4. Generate the official check-in and survey QR codes from `/admin/event-qr` after deployment so the generated codes are stored in the production database.
 
 ## Vercel Capacity Notes
@@ -113,6 +116,8 @@ Implemented optimizations:
 - Check-in uses `/api/checkin` with a single idempotent update query and keeps the first check-in timestamp.
 - Check-in and survey submissions validate the current event QR code again on the server, not only in the browser.
 - Event QR lookup uses short cache and in-flight request deduplication to absorb scan bursts.
+- Admin APIs require a signed httpOnly server-side session; a forged client cookie is not enough.
+- Admin login has lightweight per-IP rate limiting to slow brute-force attempts.
 - Survey and Action Plan submissions update participant status inside the server endpoint, avoiding extra frontend PATCH calls.
 - Survey and Action Plan submissions use single SQL statements for shorter DB connection time.
 - Registration uses PostgreSQL conflict handling for duplicate/race-safe WhatsApp registration.
@@ -133,7 +138,7 @@ Operational guidance:
 Recommended Vercel environment variables:
 
 - `DATABASE_URL` — PostgreSQL connection string. Prefer a pooled connection string if your provider offers one.
-- `NUXT_PUBLIC_ADMIN_PASSWORD` — Admin login password.
+- `NUXT_PUBLIC_ADMIN_PASSWORD` or `ADMIN_PASSWORD` — Admin login password. Prefer `ADMIN_PASSWORD` for new deployments because it is private runtime config.
 - `NUXT_PUBLIC_SCHOOL_NAMES` — Optional display/default school config.
 - `DB_POOL_MAX=1` — Recommended starting point for Vercel/serverless deployments.
 
@@ -143,8 +148,12 @@ Local verification against the current API implementation:
 
 - Production build: `npm run build` succeeded.
 - Dashboard and paginated API contract check succeeded.
+- Unauthenticated admin/list APIs returned `401`.
+- A forged `dialog-admin=active` cookie without the signed httpOnly session returned `401`.
+- Valid admin login returned `200`, then protected dashboard/participant APIs returned `200` with the session cookie.
+- Admin login brute-force check returned `401` for the first 10 wrong attempts and `429` afterward.
 - Invalid public write protection: 100 concurrent invalid check-in POST requests returned `403` with no `500` errors.
-- Read spike simulation: 200 concurrent requests across QR validation, survey questions, dashboard, and participant pagination returned `200/200` after dashboard in-flight caching was added.
+- Public read spike simulation: 200 concurrent requests across QR validation and survey questions returned `200/200` after in-flight caching was added.
 
 Important notes:
 

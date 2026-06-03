@@ -19,10 +19,11 @@ const password = ref('')
 const message = ref('')
 
 const submit = async () => {
-  if (!login(password.value)) {
+  try {
+    await login(password.value)
+    await navigateTo('/admin/dashboard')
+  } catch {
     message.value = 'Password admin salah.'
-    return
   }
-  await navigateTo('/admin/dashboard')
 }
 </script>

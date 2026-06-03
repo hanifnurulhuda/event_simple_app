@@ -1,15 +1,17 @@
 export const useAdminSession = () => {
-  const config = useRuntimeConfig()
   const adminCookie = useCookie('dialog-admin', { default: () => '', sameSite: 'lax', path: '/' })
   const isAdmin = computed(() => adminCookie.value === 'active')
 
-  const login = (password: string) => {
-    if (password.trim() !== String(config.public.adminPassword).trim()) return false
+  const login = async (password: string) => {
+    await $fetch('/api/admin/login', {
+      method: 'POST',
+      body: { password }
+    })
     adminCookie.value = 'active'
-    return true
   }
 
   const logout = async () => {
+    await $fetch('/api/admin/logout', { method: 'POST' }).catch(() => null)
     adminCookie.value = ''
     await navigateTo('/admin/login')
   }

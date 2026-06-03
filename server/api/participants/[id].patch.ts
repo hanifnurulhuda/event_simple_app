@@ -6,6 +6,11 @@ export default defineEventHandler(async (event) => {
 
   if (!id || !entries.length) throw createError({ statusCode: 400, statusMessage: 'Payload update tidak valid.' })
 
+  const publicCertificateView = entries.every(([key, value]) =>
+    (key === 'certificate_status' && value === 'viewed') || key === 'certificate_viewed_at'
+  )
+  if (!publicCertificateView) requireAdmin(event)
+
   const sets = entries.map(([key], index) => `${key} = $${index + 2}`).join(', ')
   const values = entries.map(([, value]) => value)
   const db = useDb()

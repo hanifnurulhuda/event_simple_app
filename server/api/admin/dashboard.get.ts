@@ -10,6 +10,7 @@ const cache: Record<string, { data: DashboardData; expires: number } | undefined
 const inflight: Record<string, Promise<DashboardData> | undefined> = {}
 
 export default defineEventHandler(async (event) => {
+  requireAdmin(event)
   const query = getQuery(event)
   const cacheKey = String(query.day || 'all')
   const cached = cache[cacheKey]

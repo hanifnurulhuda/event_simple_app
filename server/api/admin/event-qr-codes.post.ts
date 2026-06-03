@@ -1,4 +1,5 @@
 export default defineEventHandler(async (event) => {
+  requireAdmin(event)
   const body = await readBody(event)
   const { checkin, survey } = body || {}
 

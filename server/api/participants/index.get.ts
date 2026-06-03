@@ -1,4 +1,5 @@
 export default defineEventHandler(async (event) => {
+  requireAdmin(event)
   const query = getQuery(event)
   const db = useDb()
   const where: string[] = []
