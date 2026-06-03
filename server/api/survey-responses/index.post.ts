@@ -7,13 +7,13 @@ export default defineEventHandler(async (event) => {
 
   await assertEventCode('survey', event_code)
 
-  if (!participant_id || !participantCode) {
+  if (!participant_id) {
     throw createError({ statusCode: 400, statusMessage: 'Participant wajib diisi.' })
   }
 
   const result = await db.query(
     `with matched as (
-       select id from participants where id = $1 and participant_code = $3
+       select id from participants where id = $1 and ($3 = '' or participant_code = $3)
      ), saved as (
        insert into survey_responses (participant_id, answers)
         select $1, $2::jsonb

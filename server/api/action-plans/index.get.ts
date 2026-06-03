@@ -4,12 +4,11 @@ export default defineEventHandler(async (event) => {
 
   if (query.participant_id) {
     const participantCode = String(query.participant_code || '').trim().toUpperCase()
-    if (!participantCode) throw createError({ statusCode: 401, statusMessage: 'Kode peserta wajib diisi.' })
     const result = await db.query(
       `select action_plans.*
        from action_plans
        join participants on participants.id = action_plans.participant_id
-       where action_plans.participant_id = $1 and participants.participant_code = $2
+       where action_plans.participant_id = $1 and ($2 = '' or participants.participant_code = $2)
        limit 1`,
       [query.participant_id, participantCode]
     )

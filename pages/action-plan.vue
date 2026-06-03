@@ -98,10 +98,7 @@ const submit = async () => {
   } catch (error) {
     tone.value = 'error'
     message.value = getPublicErrorMessage(error, {
-      fallback: 'Action Plan belum berhasil dikirim. Silakan coba lagi atau hubungi panitia.',
-      byStatus: {
-        400: 'Judul dan URL Action Plan wajib diisi dengan benar.'
-      }
+      fallback: 'Action Plan belum berhasil dikirim. Silakan coba lagi atau hubungi panitia.'
     })
   } finally {
     loading.value = false

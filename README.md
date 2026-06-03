@@ -24,7 +24,7 @@ Nuxt 3 + Tailwind CSS + PostgreSQL MVP for participant registration, self check-
 | Route | Description |
 |---|---|
 | `/` | Landing page |
-| `/register` | Participant registration (name, school, class, WhatsApp, event day) |
+| `/register` | Participant registration (name, school/origin, optional class, optional WhatsApp, event day) |
 | `/success/[code]` | Registration confirmation with participant code |
 | `/checkin` | Check-in instructions |
 | `/checkin/[event_code]` | Self check-in form (scan QR → enter WhatsApp or code) |
@@ -32,7 +32,7 @@ Nuxt 3 + Tailwind CSS + PostgreSQL MVP for participant registration, self check-
 | `/survey/[event_code]` | Dynamic survey form (questions from database) |
 | `/certificate` | Certificate search |
 | `/certificate/[code]` | Printable HTML certificate (A4 landscape) |
-| `/action-plan` | Action Plan form (mandatory title, mandatory URL, optional description) |
+| `/action-plan` | Action Plan form (title, URL, and optional description) |
 
 ## Admin Routes
 
@@ -68,11 +68,11 @@ Nuxt 3 + Tailwind CSS + PostgreSQL MVP for participant registration, self check-
 
 ## Features
 
-- **Registration:** Free-text school/origin input, server-side validation, server-generated participant code/token, WhatsApp normalization, duplicate-safe insert
+- **Registration:** Free-text school/origin input, optional class/WhatsApp, server-generated participant code/token, duplicate-safe insert
 - **Check-in:** Admin-generated QR code, DB-backed validation, idempotent one-query attendance update
 - **Survey:** Dynamic questions from database, stored as JSONB, admin-configurable, DB-backed QR validation
 - **Certificate:** Printable HTML (A4 landscape), eligibility check (attended + survey completed), guarded public view tracking
-- **Action Plan:** Mandatory title, mandatory URL, optional description, manual judging (candidate/winners/awards)
+- **Action Plan:** Title, URL, optional description, manual judging (candidate/winners/awards)
 - **Admin Dashboard:** Compact aggregate cards, top school/class summaries, latest 20 participant status rows, Excel export on demand
 - **Admin Pagination:** Participant, survey, action plan, and certificate pages use server-side pagination/filtering
 - **Filtering:** By event day, attendance, survey status, certificate eligibility, judging status, and search text
@@ -87,12 +87,12 @@ Exports are intentionally not limited by the current page size. They send `all=1
 ## Public API Hardening
 
 - Public participant lookup returns only fields needed by public pages, not raw `qr_token`, WhatsApp, or full admin metadata.
-- Public survey and Action Plan submissions require both `participant_id` and matching `participant_code` to reduce cross-participant tampering.
-- Public Action Plan lookup by `participant_id` also requires matching `participant_code`.
+- Public survey and Action Plan submissions verify matching `participant_code` when it is available, but avoid blocking normal event operation if older/stale pages omit it.
+- Public Action Plan lookup by `participant_id` also verifies `participant_code` when it is available.
 - Public certificate view tracking requires matching `participant_code` and only works for eligible participants.
 - Server-side registration ignores client-provided participant code/token and generates them on the server.
 - Public write endpoints use lightweight per-IP rate limits to reduce accidental floods and basic abuse.
-- Action Plan URL validation accepts `http://` and `https://` links.
+- Action Plan backend validation is intentionally light so field issues can be handled operationally by the committee instead of blocking participant submission.
 
 ## Dashboard Behavior
 
@@ -134,7 +134,7 @@ Implemented optimizations:
 - Admin auth fails closed in production if no admin password is configured.
 - Public writes have lightweight per-IP rate limits for registration, participant lookup, check-in, survey, and Action Plan submission.
 - Public participant lookup returns only public-safe fields.
-- Survey, Action Plan, and certificate public mutations verify `participant_code` against `participant_id` before writing.
+- Survey and Action Plan public mutations verify `participant_code` against `participant_id` when provided; certificate view tracking still requires a matching participant code.
 - Registration generates participant code and QR token on the server and validates input length/event day server-side.
 - Survey and Action Plan submissions update participant status inside the server endpoint, avoiding extra frontend PATCH calls.
 - Survey and Action Plan submissions use single SQL statements for shorter DB connection time.

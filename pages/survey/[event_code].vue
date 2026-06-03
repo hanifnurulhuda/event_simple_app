@@ -136,7 +136,6 @@ const submitSurvey = async () => {
     message.value = getPublicErrorMessage(error, {
       fallback: 'Survey belum berhasil dikirim. Silakan coba lagi atau hubungi panitia.',
       byStatus: {
-        400: 'Data survey belum lengkap. Silakan periksa kembali isian Anda.',
         403: 'QR survey tidak valid. Gunakan QR resmi dari panitia.'
       }
     })
