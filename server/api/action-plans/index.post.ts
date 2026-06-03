@@ -1,5 +1,5 @@
 export default defineEventHandler(async (event) => {
-  assertRateLimit(event, 'public-action-plan', 60, 60_000)
+  assertRateLimit(event, 'public-action-plan', 300, 60_000)
   const body = await readBody(event)
   const title = String(body.title || '').trim()
   const description = String(body.description || '').trim()
@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
   if (!body.participant_id || !participantCode || !title || !actionUrl) {
     throw createError({ statusCode: 400, statusMessage: 'Participant, judul, dan URL Action Plan wajib diisi.' })
   }
-  if (title.length > 180 || description.length > 2000 || actionUrl.length > 1000 || !/^https:\/\//i.test(actionUrl)) {
+  if (title.length > 180 || description.length > 2000 || actionUrl.length > 1000 || !/^https?:\/\//i.test(actionUrl)) {
     throw createError({ statusCode: 400, statusMessage: 'Data Action Plan tidak valid.' })
   }
 

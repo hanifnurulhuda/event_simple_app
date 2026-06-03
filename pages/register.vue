@@ -38,10 +38,11 @@ const submit = async () => {
   try {
     const whatsapp = normalizeWhatsapp(form.whatsapp)
     const participant = {
-      ...form,
+      name: form.name.trim(),
+      school: form.school.trim(),
+      class_name: form.class_name.trim(),
       whatsapp,
-      participant_code: createParticipantCode(),
-      qr_token: createQrToken()
+      event_day: form.event_day
     }
     const data = await $fetch<{ participant_code: string }>('/api/participants', {
       method: 'POST',

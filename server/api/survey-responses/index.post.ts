@@ -1,5 +1,5 @@
 export default defineEventHandler(async (event) => {
-  assertRateLimit(event, 'public-survey', 60, 60_000)
+  assertRateLimit(event, 'public-survey', 300, 60_000)
   const body = await readBody(event)
   const db = useDb()
   const { participant_id, participant_code, event_code, ...answers } = body

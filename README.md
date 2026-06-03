@@ -32,7 +32,7 @@ Nuxt 3 + Tailwind CSS + PostgreSQL MVP for participant registration, self check-
 | `/survey/[event_code]` | Dynamic survey form (questions from database) |
 | `/certificate` | Certificate search |
 | `/certificate/[code]` | Printable HTML certificate (A4 landscape) |
-| `/action-plan` | Action Plan form (mandatory title, mandatory HTTPS URL, optional description) |
+| `/action-plan` | Action Plan form (mandatory title, mandatory URL, optional description) |
 
 ## Admin Routes
 
@@ -72,7 +72,7 @@ Nuxt 3 + Tailwind CSS + PostgreSQL MVP for participant registration, self check-
 - **Check-in:** Admin-generated QR code, DB-backed validation, idempotent one-query attendance update
 - **Survey:** Dynamic questions from database, stored as JSONB, admin-configurable, DB-backed QR validation
 - **Certificate:** Printable HTML (A4 landscape), eligibility check (attended + survey completed), guarded public view tracking
-- **Action Plan:** Mandatory title, mandatory HTTPS URL, optional description, manual judging (candidate/winners/awards)
+- **Action Plan:** Mandatory title, mandatory URL, optional description, manual judging (candidate/winners/awards)
 - **Admin Dashboard:** Compact aggregate cards, top school/class summaries, latest 20 participant status rows, Excel export on demand
 - **Admin Pagination:** Participant, survey, action plan, and certificate pages use server-side pagination/filtering
 - **Filtering:** By event day, attendance, survey status, certificate eligibility, judging status, and search text
@@ -92,7 +92,7 @@ Exports are intentionally not limited by the current page size. They send `all=1
 - Public certificate view tracking requires matching `participant_code` and only works for eligible participants.
 - Server-side registration ignores client-provided participant code/token and generates them on the server.
 - Public write endpoints use lightweight per-IP rate limits to reduce accidental floods and basic abuse.
-- Action Plan URL validation accepts HTTPS links only.
+- Action Plan URL validation accepts `http://` and `https://` links.
 
 ## Dashboard Behavior
 

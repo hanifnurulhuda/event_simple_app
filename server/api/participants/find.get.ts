@@ -1,5 +1,5 @@
 export default defineEventHandler(async (event) => {
-  assertRateLimit(event, 'public-find-participant', 120, 60_000)
+  assertRateLimit(event, 'public-find-participant', 300, 60_000)
   const query = getQuery(event)
   const identifier = String(query.identifier || '').trim()
   const whatsapp = String(query.whatsapp || '').trim()

@@ -1,5 +1,5 @@
 export default defineEventHandler(async (event) => {
-  assertRateLimit(event, 'public-checkin', 120, 60_000)
+  assertRateLimit(event, 'public-checkin', 300, 60_000)
   const body = await readBody<{ identifier?: string; whatsapp?: string }>(event)
   const identifier = String(body.identifier || '').trim()
   const whatsapp = String(body.whatsapp || '').trim()
