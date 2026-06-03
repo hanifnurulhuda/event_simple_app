@@ -37,7 +37,7 @@
                   <label class="label">Tipe</label>
                   <select v-model="q.type" class="input">
                     <option value="rating">Rating (1-5)</option>
-                    <option value="choice">Pilihan </option>
+                    <option value="choice">Pilihan Jawaban</option>
                     <option value="textarea">Teks bebas</option>
                   </select>
                 </div>
