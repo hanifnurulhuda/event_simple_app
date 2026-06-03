@@ -14,20 +14,29 @@
           </form>
           <form v-else class="mt-6 grid gap-5" @submit.prevent="submitSurvey">
             <div class="rounded-2xl bg-slate-100 p-4 text-sm font-semibold text-slate-700">{{ participant.name }} - {{ participant.school }}</div>
-            <div v-for="question in questions" :key="question.question_key">
-              <label class="label">{{ question.label }}</label>
-              <select v-if="question.type === 'rating'" v-model="answers[question.question_key]" class="input" required>
-                <option value="">Pilih rating</option>
-                <option v-for="score in [1, 2, 3, 4, 5]" :key="score" :value="String(score)">{{ score }} / 5</option>
-              </select>
-              <select v-else-if="question.type === 'choice'" v-model="answers[question.question_key]" class="input" required>
-                <option value="">Pilih jawaban</option>
-                <option v-for="option in question.options" :key="option" :value="option">{{ option }}</option>
-              </select>
-              <textarea v-else v-model="answers[question.question_key]" class="input min-h-28" required />
+            <div v-if="loadingQuestions" class="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm font-semibold text-slate-600">
+              <div class="spinner !h-5 !w-5" />
+              Memuat pertanyaan survey...
             </div>
+            <div v-else-if="!questions.length" class="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm font-semibold text-amber-800">
+              Pertanyaan survey belum tersedia. Silakan hubungi panitia.
+            </div>
+            <template v-else>
+              <div v-for="question in questions" :key="question.question_key">
+                <label class="label">{{ question.label }}</label>
+                <select v-if="question.type === 'rating'" v-model="answers[question.question_key]" class="input" required>
+                  <option value="">Pilih rating</option>
+                  <option v-for="score in [1, 2, 3, 4, 5]" :key="score" :value="String(score)">{{ score }} / 5</option>
+                </select>
+                <select v-else-if="question.type === 'choice'" v-model="answers[question.question_key]" class="input" required>
+                  <option value="">Pilih jawaban</option>
+                  <option v-for="option in question.options" :key="option" :value="option">{{ option }}</option>
+                </select>
+                <textarea v-else v-model="answers[question.question_key]" class="input min-h-28" required />
+              </div>
+            </template>
             <StatusMessage :message="message" :tone="tone" />
-            <button class="btn-primary" :disabled="loading">{{ loading ? 'Menyimpan...' : 'Kirim Survey' }}</button>
+            <button class="btn-primary" :disabled="loading || loadingQuestions || !questions.length">{{ loading ? 'Menyimpan...' : 'Kirim Survey' }}</button>
           </form>
         </template>
         <template v-else-if="!validEventCode">
@@ -46,10 +55,12 @@ const route = useRoute()
 const identifier = ref('')
 const participant = ref<Participant | null>(null)
 const loading = ref(false)
+const loadingQuestions = ref(false)
 const validating = ref(true)
 const validEventCode = ref(false)
 const message = ref('')
 const tone = ref<'success' | 'error' | 'info'>('info')
+const questions = ref<SurveyQuestion[]>([])
 const answers = reactive<Record<string, string>>({})
 
 onMounted(async () => {
@@ -62,6 +73,22 @@ onMounted(async () => {
   }
   validating.value = false
 })
+
+const loadQuestions = async () => {
+  if (questions.value.length || loadingQuestions.value) return
+  loadingQuestions.value = true
+  try {
+    questions.value = await $fetch<SurveyQuestion[]>('/api/survey-questions')
+    for (const question of questions.value) {
+      answers[question.question_key] ||= ''
+    }
+  } catch {
+    tone.value = 'error'
+    message.value = 'Pertanyaan survey gagal dimuat. Coba refresh halaman.'
+  } finally {
+    loadingQuestions.value = false
+  }
+}
 
 const loadParticipant = async () => {
   if (!validEventCode.value) return
@@ -80,13 +107,14 @@ const loadParticipant = async () => {
       return
     }
     participant.value = found
+    await loadQuestions()
   } finally {
     loading.value = false
   }
 }
 
 const submitSurvey = async () => {
-  if (!participant.value) return
+  if (!participant.value || !questions.value.length) return
   loading.value = true
   try {
     await $fetch('/api/survey-responses', {
