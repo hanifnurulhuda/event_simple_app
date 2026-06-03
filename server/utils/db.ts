@@ -9,9 +9,13 @@ export const useDb = () => {
     const config = useRuntimeConfig()
     pool = new Pool({
       connectionString: config.databaseUrl,
-      max: 1,
-      connectionTimeoutMillis: 5000,
-      idleTimeoutMillis: 30000
+      max: Number(process.env.DB_POOL_MAX || 1),
+      connectionTimeoutMillis: 10000,
+      idleTimeoutMillis: 5000,
+      allowExitOnIdle: true,
+      maxUses: 500,
+      statement_timeout: 10000,
+      query_timeout: 10000
     })
     pool.on('error', (err) => {
       console.error('Database pool error:', err.message)

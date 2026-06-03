@@ -16,10 +16,10 @@ export default defineNuxtConfig({
     noExternal: ['qrcode']
   },
   vite: {
+    build: { sourcemap: false },
     optimizeDeps: {
       include: ['qrcode']
-    }
-    ,
+    },
     resolve: {
       alias: {
         '#app-manifest': path.resolve(process.cwd(), '.nuxt/dist/server/client.manifest.mjs')
@@ -27,7 +27,28 @@ export default defineNuxtConfig({
     }
   },
   nitro: {
-    preset: 'vercel'
+    preset: 'vercel',
+    future: {
+      nativeSWR: true
+    }
+  },
+  routeRules: {
+    '/': { swr: 300 },
+    '/register': { swr: 300 },
+    '/checkin': { swr: 300 },
+    '/survey': { swr: 300 },
+    '/certificate': { swr: 300 },
+    '/action-plan': { swr: 300 },
+    '/checkin/**': { swr: 60 },
+    '/survey/**': { swr: 60 },
+    '/api/survey-questions': { swr: 300 },
+    '/api/event-qr-codes/**': { headers: { 'cache-control': 'public, max-age=3, stale-while-revalidate=15' } },
+    '/api/checkin': { headers: { 'cache-control': 'no-store' } },
+    '/admin/**': { headers: { 'cache-control': 'no-store' } },
+    '/api/admin/**': { headers: { 'cache-control': 'no-store' } },
+    '/api/participants/**': { headers: { 'cache-control': 'no-store' } },
+    '/api/survey-responses/**': { headers: { 'cache-control': 'no-store' } },
+    '/api/action-plans/**': { headers: { 'cache-control': 'no-store' } }
   },
   app: {
     head: {

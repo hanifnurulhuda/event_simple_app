@@ -1,4 +1,5 @@
 create extension if not exists pgcrypto;
+create extension if not exists pg_trgm;
 
 create table if not exists participants (
   id uuid primary key default gen_random_uuid(),
@@ -62,6 +63,12 @@ create table if not exists survey_questions (
   updated_at timestamp with time zone default now()
 );
 
+create table if not exists event_qr_codes (
+  type text primary key check (type in ('checkin', 'survey')),
+  code text not null,
+  created_at timestamp with time zone default now()
+);
+
 create index if not exists participants_whatsapp_idx on participants (whatsapp);
 create index if not exists participants_participant_code_idx on participants (participant_code);
 create index if not exists participants_qr_token_idx on participants (qr_token);
@@ -70,6 +77,16 @@ create index if not exists participants_school_idx on participants (school);
 create index if not exists participants_attended_idx on participants (attended);
 create index if not exists participants_survey_submitted_idx on participants (survey_submitted);
 create index if not exists participants_action_plan_submitted_idx on participants (action_plan_submitted);
+create index if not exists participants_created_at_idx on participants (created_at desc);
+create index if not exists participants_certificate_status_idx on participants (certificate_status);
+create index if not exists participants_certificate_viewed_at_idx on participants (certificate_viewed_at);
+create index if not exists participants_judging_status_idx on participants (judging_status);
+create index if not exists participants_search_trgm_idx on participants using gin ((lower(name || ' ' || school || ' ' || coalesce(class_name, '') || ' ' || whatsapp || ' ' || participant_code)) gin_trgm_ops);
+create index if not exists survey_responses_participant_id_idx on survey_responses (participant_id);
+create index if not exists survey_responses_submitted_at_idx on survey_responses (submitted_at desc);
+create index if not exists action_plans_participant_id_idx on action_plans (participant_id);
+create index if not exists action_plans_submitted_at_idx on action_plans (submitted_at desc);
+create index if not exists action_plans_search_trgm_idx on action_plans using gin ((lower(title || ' ' || description || ' ' || coalesce(drive_link, ''))) gin_trgm_ops);
 
 create or replace function set_updated_at()
 returns trigger as $$

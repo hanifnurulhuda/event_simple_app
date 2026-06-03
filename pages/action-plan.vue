@@ -69,10 +69,6 @@ const submit = async () => {
   try {
     const saved = await $fetch<ActionPlan>('/api/action-plans', { method: 'POST', body: { participant_id: participant.value.id, action_url: actionUrl.value } })
     existing.value = saved
-    await $fetch(`/api/participants/${participant.value.id}`, {
-      method: 'PATCH',
-      body: { action_plan_submitted: true }
-    })
     tone.value = 'success'
     message.value = 'Action Plan Anda berhasil dikirim. Panitia akan melakukan seleksi secara manual.'
   } catch (error) {
