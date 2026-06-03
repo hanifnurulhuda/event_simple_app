@@ -64,7 +64,7 @@ const loadParticipant = async () => {
       return
     }
     participant.value = found
-    existing.value = await $fetch<ActionPlan | null>('/api/action-plans', { query: { participant_id: found.id } })
+    existing.value = await $fetch<ActionPlan | null>('/api/action-plans', { query: { participant_id: found.id, participant_code: found.participant_code } })
     actionTitle.value = existing.value?.title || ''
     actionDescription.value = existing.value?.description || ''
     actionUrl.value = existing.value?.drive_link || ''
@@ -86,6 +86,7 @@ const submit = async () => {
       method: 'POST',
       body: {
         participant_id: participant.value.id,
+        participant_code: participant.value.participant_code,
         title: actionTitle.value,
         description: actionDescription.value,
         action_url: actionUrl.value

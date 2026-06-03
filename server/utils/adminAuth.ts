@@ -16,8 +16,11 @@ const safeEqual = (a: string, b: string) => {
 
 export const createAdminSession = (event: Parameters<typeof setCookie>[0]) => {
   const config = useRuntimeConfig()
+  const secret = String(config.adminPassword || '').trim()
+  if (!secret) throw createError({ statusCode: 500, statusMessage: 'Admin password belum dikonfigurasi.' })
+
   const issuedAt = Date.now()
-  const token = `${issuedAt}.${signSession(issuedAt, config.adminPassword)}`
+  const token = `${issuedAt}.${signSession(issuedAt, secret)}`
 
   setCookie(event, SESSION_COOKIE, token, {
     httpOnly: true,
@@ -42,12 +45,15 @@ export const clearAdminSession = (event: Parameters<typeof deleteCookie>[0]) => 
 
 export const isAdminRequest = (event: Parameters<typeof getCookie>[0]) => {
   const config = useRuntimeConfig()
+  const secret = String(config.adminPassword || '').trim()
+  if (!secret) return false
+
   const token = getCookie(event, SESSION_COOKIE) || ''
   const [issuedAtText, signature] = token.split('.')
   const issuedAt = Number(issuedAtText)
 
   if (!issuedAt || !signature || Date.now() - issuedAt > SESSION_TTL_MS) return false
-  return safeEqual(signature, signSession(issuedAt, config.adminPassword))
+  return safeEqual(signature, signSession(issuedAt, secret))
 }
 
 export const requireAdmin = (event: Parameters<typeof getCookie>[0]) => {

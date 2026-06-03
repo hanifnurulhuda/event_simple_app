@@ -3,7 +3,16 @@ export default defineEventHandler(async (event) => {
   const db = useDb()
 
   if (query.participant_id) {
-    const result = await db.query('select * from action_plans where participant_id = $1 limit 1', [query.participant_id])
+    const participantCode = String(query.participant_code || '').trim().toUpperCase()
+    if (!participantCode) throw createError({ statusCode: 401, statusMessage: 'Kode peserta wajib diisi.' })
+    const result = await db.query(
+      `select action_plans.*
+       from action_plans
+       join participants on participants.id = action_plans.participant_id
+       where action_plans.participant_id = $1 and participants.participant_code = $2
+       limit 1`,
+      [query.participant_id, participantCode]
+    )
     return result.rows[0] || null
   }
 

@@ -89,7 +89,11 @@ onMounted(async () => {
     try {
       await $fetch(`/api/participants/${participant.value.id}`, {
         method: 'PATCH',
-        body: { certificate_status: 'viewed', certificate_viewed_at: new Date().toISOString() }
+        body: {
+          participant_code: participant.value.participant_code,
+          certificate_status: 'viewed',
+          certificate_viewed_at: new Date().toISOString()
+        }
       })
     } catch {
       // silent

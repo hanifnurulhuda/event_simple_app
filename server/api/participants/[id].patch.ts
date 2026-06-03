@@ -11,9 +11,19 @@ export default defineEventHandler(async (event) => {
   )
   if (!publicCertificateView) requireAdmin(event)
 
+  const participantCode = String(body.participant_code || '').trim().toUpperCase()
+  if (publicCertificateView && !participantCode) {
+    throw createError({ statusCode: 401, statusMessage: 'Kode peserta wajib diisi.' })
+  }
+
   const sets = entries.map(([key], index) => `${key} = $${index + 2}`).join(', ')
   const values = entries.map(([, value]) => value)
   const db = useDb()
-  const result = await db.query(`update participants set ${sets} where id = $1 returning *`, [id, ...values])
+  const whereSql = publicCertificateView
+    ? `where id = $1 and participant_code = $${values.length + 2} and attended = true and survey_submitted = true`
+    : 'where id = $1'
+  const params = publicCertificateView ? [id, ...values, participantCode] : [id, ...values]
+  const result = await db.query(`update participants set ${sets} ${whereSql} returning *`, params)
+  if (!result.rowCount) throw createError({ statusCode: 404, statusMessage: 'Data peserta tidak ditemukan.' })
   return result.rows[0]
 })

@@ -122,7 +122,12 @@ const submitSurvey = async () => {
   try {
     await $fetch('/api/survey-responses', {
       method: 'POST',
-      body: { participant_id: participant.value.id, event_code: String(route.params.event_code || ''), ...answers }
+      body: {
+        participant_id: participant.value.id,
+        participant_code: participant.value.participant_code,
+        event_code: String(route.params.event_code || ''),
+        ...answers
+      }
     })
     tone.value = 'success'
     message.value = 'Terima kasih. Refleksi kegiatan Anda sudah tersimpan.'

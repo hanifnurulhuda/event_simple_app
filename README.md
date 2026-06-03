@@ -13,7 +13,7 @@ Nuxt 3 + Tailwind CSS + PostgreSQL MVP for participant registration, self check-
 
 1. Install dependencies: `npm install`
 2. Copy `.env.example` to `.env`
-3. Fill in `DATABASE_URL` and `NUXT_PUBLIC_ADMIN_PASSWORD`
+3. Fill in `DATABASE_URL` and `ADMIN_PASSWORD`
 4. Create database: `createdb -U postgres simple_event`
 5. Run schema: `psql -U postgres -d simple_event -f sql/schema.sql`
 6. (Optional) Seed dummy data: `psql -U postgres -d simple_event -f sql/seed.sql`
@@ -32,7 +32,7 @@ Nuxt 3 + Tailwind CSS + PostgreSQL MVP for participant registration, self check-
 | `/survey/[event_code]` | Dynamic survey form (questions from database) |
 | `/certificate` | Certificate search |
 | `/certificate/[code]` | Printable HTML certificate (A4 landscape) |
-| `/action-plan` | Action Plan form (URL only) |
+| `/action-plan` | Action Plan form (mandatory title, mandatory HTTPS URL, optional description) |
 
 ## Admin Routes
 
@@ -49,12 +49,13 @@ Nuxt 3 + Tailwind CSS + PostgreSQL MVP for participant registration, self check-
 
 ## Admin Auth
 
-- Admin password: set via `NUXT_PUBLIC_ADMIN_PASSWORD` or `ADMIN_PASSWORD` env.
+- Admin password: set via private `ADMIN_PASSWORD` env. `NUXT_PUBLIC_ADMIN_PASSWORD` is still supported as a fallback, but new deployments should avoid public runtime config for secrets.
 - Login is handled server-side through `/api/admin/login`.
 - Admin API access requires a signed httpOnly `dialog-admin-session` cookie.
 - `dialog-admin` is only a non-sensitive UI flag; API endpoints do not trust it.
 - Route middleware protects admin pages, and server utilities protect admin/list APIs.
 - Login attempts are rate-limited per IP to slow brute-force attempts.
+- Production deploys fail closed for admin auth if no admin password is configured.
 
 ## Database Structure
 
@@ -67,11 +68,11 @@ Nuxt 3 + Tailwind CSS + PostgreSQL MVP for participant registration, self check-
 
 ## Features
 
-- **Registration:** Free-text school/origin input, WhatsApp normalization, duplicate-safe insert
+- **Registration:** Free-text school/origin input, server-side validation, server-generated participant code/token, WhatsApp normalization, duplicate-safe insert
 - **Check-in:** Admin-generated QR code, DB-backed validation, idempotent one-query attendance update
-- **Survey:** Dynamic questions from database, stored as JSONB, admin-configurable
-- **Certificate:** Printable HTML (A4 landscape), eligibility check (attended + survey completed)
-- **Action Plan:** URL-only submission, manual judging (candidate/winners/awards)
+- **Survey:** Dynamic questions from database, stored as JSONB, admin-configurable, DB-backed QR validation
+- **Certificate:** Printable HTML (A4 landscape), eligibility check (attended + survey completed), guarded public view tracking
+- **Action Plan:** Mandatory title, mandatory HTTPS URL, optional description, manual judging (candidate/winners/awards)
 - **Admin Dashboard:** Compact aggregate cards, top school/class summaries, latest 20 participant status rows, Excel export on demand
 - **Admin Pagination:** Participant, survey, action plan, and certificate pages use server-side pagination/filtering
 - **Filtering:** By event day, attendance, survey status, certificate eligibility, judging status, and search text
@@ -80,6 +81,18 @@ Nuxt 3 + Tailwind CSS + PostgreSQL MVP for participant registration, self check-
 ## Export
 
 All admin tables support Excel export (`.xlsx`) via SheetJS with filenames matching the page name. Exports fetch all matching rows only when the export button is clicked; normal table views stay paginated to avoid loading large datasets during the event.
+
+Exports are intentionally not limited by the current page size. They send `all=1` to the server, skip SQL `LIMIT/OFFSET`, and include all rows matching the active filters such as search, event day, attendance/survey/certificate status, or judging status.
+
+## Public API Hardening
+
+- Public participant lookup returns only fields needed by public pages, not raw `qr_token`, WhatsApp, or full admin metadata.
+- Public survey and Action Plan submissions require both `participant_id` and matching `participant_code` to reduce cross-participant tampering.
+- Public Action Plan lookup by `participant_id` also requires matching `participant_code`.
+- Public certificate view tracking requires matching `participant_code` and only works for eligible participants.
+- Server-side registration ignores client-provided participant code/token and generates them on the server.
+- Public write endpoints use lightweight per-IP rate limits to reduce accidental floods and basic abuse.
+- Action Plan URL validation accepts HTTPS links only.
 
 ## Dashboard Behavior
 
@@ -97,7 +110,7 @@ For production deployment, use a PostgreSQL cloud provider (Neon, Supabase, Rail
 
 1. Run `sql/schema.sql` on the production database.
 2. Optionally run `sql/seed.sql` only if dummy/demo participants are needed.
-3. Set required environment variables in Vercel: `DATABASE_URL`, `NUXT_PUBLIC_ADMIN_PASSWORD` or `ADMIN_PASSWORD`, and `NUXT_PUBLIC_SCHOOL_NAMES`.
+3. Set required environment variables in Vercel: `DATABASE_URL`, `ADMIN_PASSWORD`, and optionally `NUXT_PUBLIC_SCHOOL_NAMES`.
 4. Generate the official check-in and survey QR codes from `/admin/event-qr` after deployment so the generated codes are stored in the production database.
 
 ## Vercel Capacity Notes
@@ -118,6 +131,11 @@ Implemented optimizations:
 - Event QR lookup uses short cache and in-flight request deduplication to absorb scan bursts.
 - Admin APIs require a signed httpOnly server-side session; a forged client cookie is not enough.
 - Admin login has lightweight per-IP rate limiting to slow brute-force attempts.
+- Admin auth fails closed in production if no admin password is configured.
+- Public writes have lightweight per-IP rate limits for registration, participant lookup, check-in, survey, and Action Plan submission.
+- Public participant lookup returns only public-safe fields.
+- Survey, Action Plan, and certificate public mutations verify `participant_code` against `participant_id` before writing.
+- Registration generates participant code and QR token on the server and validates input length/event day server-side.
 - Survey and Action Plan submissions update participant status inside the server endpoint, avoiding extra frontend PATCH calls.
 - Survey and Action Plan submissions use single SQL statements for shorter DB connection time.
 - Registration uses PostgreSQL conflict handling for duplicate/race-safe WhatsApp registration.
@@ -138,7 +156,7 @@ Operational guidance:
 Recommended Vercel environment variables:
 
 - `DATABASE_URL` — PostgreSQL connection string. Prefer a pooled connection string if your provider offers one.
-- `NUXT_PUBLIC_ADMIN_PASSWORD` or `ADMIN_PASSWORD` — Admin login password. Prefer `ADMIN_PASSWORD` for new deployments because it is private runtime config.
+- `ADMIN_PASSWORD` — Admin login password. Required for production; prefer this private runtime config over `NUXT_PUBLIC_ADMIN_PASSWORD`.
 - `NUXT_PUBLIC_SCHOOL_NAMES` — Optional display/default school config.
 - `DB_POOL_MAX=1` — Recommended starting point for Vercel/serverless deployments.
 
