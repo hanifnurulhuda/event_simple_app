@@ -17,6 +17,7 @@ export default defineEventHandler(async (event) => {
       ['checkin', checkin]
     )
     updates.push(result.rows[0])
+    clearEventQrCodeCache('checkin')
   }
   if (survey) {
     const result = await db.query(
@@ -26,6 +27,7 @@ export default defineEventHandler(async (event) => {
       ['survey', survey]
     )
     updates.push(result.rows[0])
+    clearEventQrCodeCache('survey')
   }
 
   return { ok: true, updates }
