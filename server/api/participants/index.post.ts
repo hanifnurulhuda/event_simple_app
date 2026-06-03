@@ -12,17 +12,14 @@ const createParticipantCodeServer = () => `DK-${Date.now().toString(36).toUpperC
 export default defineEventHandler(async (event) => {
   assertRateLimit(event, 'public-register', 300, 60_000)
   const body = await readBody(event)
-  const name = String(body.name || '').trim()
-  const school = String(body.school || '').trim()
-  const className = String(body.class_name || '').trim() || '-'
   const whatsapp = normalizeWhatsappServer(body.whatsapp)
+  const name = (String(body.name || '').trim() || `Peserta ${whatsapp.slice(-4)}`).slice(0, 120)
+  const school = (String(body.school || '').trim() || '-').slice(0, 160)
+  const className = (String(body.class_name || '').trim() || '-').slice(0, 80)
   const requestedEventDay = String(body.event_day || '').trim()
   const eventDay = ['17 Juni', '18 Juni'].includes(requestedEventDay) ? requestedEventDay : '17 Juni'
 
-  if (!name || !school || !whatsapp) {
-    throw createError({ statusCode: 400, statusMessage: 'Data pendaftaran tidak valid.' })
-  }
-  if (name.length > 120 || school.length > 160 || className.length > 80 || whatsapp.length < 8 || whatsapp.length > 18) {
+  if (!whatsapp || whatsapp.length < 8 || whatsapp.length > 18) {
     throw createError({ statusCode: 400, statusMessage: 'Data pendaftaran tidak valid.' })
   }
 

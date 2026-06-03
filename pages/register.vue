@@ -54,7 +54,7 @@ const submit = async () => {
     message.value = getPublicErrorMessage(error, {
       fallback: 'Pendaftaran belum berhasil. Silakan coba lagi atau hubungi panitia.',
       byStatus: {
-        400: 'Data pendaftaran belum lengkap. Silakan periksa kembali isian Anda.'
+        400: 'Nomor WhatsApp belum sesuai. Silakan periksa kembali nomor yang diisi.'
       }
     })
   } finally {
